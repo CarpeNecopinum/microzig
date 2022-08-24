@@ -16774,6 +16774,11 @@ pub fn Mmio(comptime size: u8, comptime PackedT: type) type {
             }
             write(addr, val);
         }
+
+        // All that messing with the IntT feels kinda overkill for flipping a single bit...
+        pub fn ref(self: *volatile Self) *volatile PackedT {
+            return @ptrCast(*volatile PackedT, self);
+        }
     };
 }
 
