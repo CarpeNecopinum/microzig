@@ -121,18 +121,18 @@ pub fn addEmbeddedExecutable(
 
     const config_pkg = Pkg{
         .name = "microzig-config",
-        .source = .{ .path = config_file_name },
+        .path = .{ .path = config_file_name },
     };
 
     const chip_pkg = Pkg{
         .name = "chip",
-        .source = .{ .path = chip.path },
+        .path = .{ .path = chip.path },
         .dependencies = &.{pkgs.microzig},
     };
 
     const cpu_pkg = Pkg{
         .name = "cpu",
-        .source = .{ .path = chip.cpu.path },
+        .path = .{ .path = chip.cpu.path },
         .dependencies = &.{pkgs.microzig},
     };
 
@@ -162,7 +162,7 @@ pub fn addEmbeddedExecutable(
 
     exe.inner.addPackage(.{
         .name = "hal",
-        .source = if (options.hal_package_path) |hal_package_path|
+        .path = if (options.hal_package_path) |hal_package_path|
             hal_package_path
         else .{ .path = root_path ++ "core/empty.zig" },
         .dependencies = &.{pkgs.microzig},
@@ -172,7 +172,7 @@ pub fn addEmbeddedExecutable(
         .board => |board| {
             exe.inner.addPackage(std.build.Pkg{
                 .name = "board",
-                .source = .{ .path = board.path },
+                .path = .{ .path = board.path },
                 .dependencies = &.{pkgs.microzig},
             });
         },
@@ -181,7 +181,7 @@ pub fn addEmbeddedExecutable(
 
     exe.inner.addPackage(.{
         .name = "app",
-        .source = .{ .path = source },
+        .path = .{ .path = source },
     });
     exe.addPackage(pkgs.microzig);
 
@@ -191,12 +191,12 @@ pub fn addEmbeddedExecutable(
 pub const pkgs = struct {
     const mmio = std.build.Pkg{
         .name = "microzig-mmio",
-        .source = .{ .path = root_path ++ "core/mmio.zig" },
+        .path = .{ .path = root_path ++ "core/mmio.zig" },
     };
 
     pub const microzig = std.build.Pkg{
         .name = "microzig",
-        .source = .{ .path = root_path ++ "core/import-package.zig" },
+        .path = .{ .path = root_path ++ "core/import-package.zig" },
     };
 };
 
@@ -204,13 +204,13 @@ pub const pkgs = struct {
 pub const drivers = struct {
     pub const quadrature = std.build.Pkg{
         .name = "microzig.quadrature",
-        .source = .{ .path = root_path ++ "drivers/quadrature.zig" },
+        .path = .{ .path = root_path ++ "drivers/quadrature.zig" },
         .dependencies = &.{pkgs.microzig},
     };
 
     pub const button = std.build.Pkg{
         .name = "microzig.button",
-        .source = .{ .path = root_path ++ "drivers/button.zig" },
+        .path = .{ .path = root_path ++ "drivers/button.zig" },
         .dependencies = &.{pkgs.microzig},
     };
 };
